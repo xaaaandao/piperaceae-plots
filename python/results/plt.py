@@ -12,11 +12,13 @@ def plot_brazil(column, key, series, title, fontsize=6, is_region=False):
     fig, ax = plt.subplots(figsize=(10, 10), dpi=300)
 
     series.plot(column=column, cmap='Reds', legend=True, ax=ax,
-                legend_kwds={'shrink': 0.3, 'orientation': 'horizontal'})
-    series.apply(lambda x: ax.annotate(text=x[key] + '\n' + str(np.round(x[column], 2)),
+                legend_kwds={'shrink': 0.3, 'orientation': 'horizontal', 'pad': 0.0})
+    series.apply(lambda x: ax.annotate(text=x[key],
                                        xy=np.subtract(x.geometry.centroid.coords[0], coords_complement(is_region)),
                                        ha='center', fontsize=fontsize), axis=1)
 
     ax.set_title(title, fontsize=18)
     ax.axis('off')
-    fig.savefig(column + '.png')
+    fig.savefig(column + '.png', bbox_inches='tight', pad_inches=0)
+
+
